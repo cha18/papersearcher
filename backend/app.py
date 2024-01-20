@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
-from flaskystuff import create_app
+from pastpaperapi import create_app
 
 app = create_app()
 
