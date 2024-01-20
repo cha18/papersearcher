@@ -177,7 +177,7 @@ export default {
 
             this.articles=[];
             console.log(searchParams.toString())
-            fetch(`http://localhost:5000/search?${searchParams.toString()}`, {
+            fetch(`http://pastpaperapi.onrender.com/search?${searchParams.toString()}`, {
                 method: "GET",
                 headers: {
                 "Content-Type": "application/json",
