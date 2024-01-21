@@ -91,13 +91,28 @@ const count = ref(0)
         <button @click="scrollToTop" class="px-4 py-2 hover:bg-white hover:text-black z-50 border-2 border-slate-600">
             TOP
         </button>
-        <button @click="scrollToClosestQ" class="px-4 py-2 hover:bg-white hover:text-black z-50 border-2 border-l-0 border-slate-600">
+        <button @click="scrollToClosestQ" v-shortkey="['ctrl', 'arrowdown']" @shortkey="scrollToClosestQ" class="px-4 py-2 hover:bg-white hover:text-black z-50 border-2 border-l-0 border-slate-600">
             NEXT QUESTION
         </button>
-        <button @click="scrollToClosestMatch" class="px-4 py-2 hover:bg-white hover:text-black z-50 border-2 border-l-0 border-slate-600">
+        <button @click="scrollToClosestMatch" v-shortkey="['alt', 'arrowdown']" @shortkey="scrollToClosestMatch" class="px-4 py-2 hover:bg-white hover:text-black z-50 border-2 border-l-0 border-slate-600">
             NEXT MATCH
         </button>
         </div>
+        <Transition name="fade">
+            <div v-if="!hide" class="font-medium text-s bottom-0 left-0 px-7 py-4 fixed rounded-2xl bg-slate-600 z-50 border-2 border-l-0 border-slate-600">
+                <p class="py-2">
+                    Jump to Next Question
+                    <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Ctrl</kbd> + <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Arrow Key Down</kbd>
+                </p>
+                <p class="py-2">
+                    Jump to Next Match --
+                    <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Alt</kbd> + <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Arrow Key Down</kbd>
+                </p>
+                 
+
+            </div>
+        </Transition>
+
         
         <div v-if="loading" class='flex justify-center items-center fixed top-0 w-full h-full z-50 bg-slate-800'>
             <span class='sr-only'>Loading...</span>
@@ -142,6 +157,16 @@ const count = ref(0)
 .v-leave-to {
   opacity: 0;
 }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 10.0s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
 
 <script>
@@ -158,13 +183,17 @@ export default {
                 truechosenSubject: 'ALL',
                 chosenSubjectUrlName: 'ALL',
                 ptypeState: "excluding MS",
-                includeMS: false
+                includeMS: false,
+                hide: false
             }
     },
     created() {
         eventBus.on('custom-event', this.handleSearch);
         eventBus.on('custom-event', this.runTakingTooLongAlerter);
 
+    },
+    mounted() {
+        this.hide = true;
     },
     methods: {
         handleSearch(searchText) {
