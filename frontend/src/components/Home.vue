@@ -160,7 +160,7 @@ const count = ref(0)
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 10.0s ease;
+  transition: opacity 5.0s ease-in;
 }
 
 .fade-enter-from,
