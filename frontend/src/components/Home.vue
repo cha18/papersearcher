@@ -19,25 +19,25 @@ const count = ref(0)
         <p id="navbarContent">Navbar Content</p>
         </div>
         <div id="gridContainer">
-            <div class="grid grid-cols-8 grid-rows-5 gap-7 h-screen h-width">
-                <div class="row-start-2 row-span-1 col-start-2 col-span-1">
-                    <div class="flex flex-col relative mt-40 min-w-sm items-end justify-center">
+            <div class="grid grid-cols-8 grid-rows-5 gap-7 h-screen w-screen">
+                <div class="md:row-start-2 md:col-start-2 md:col-span-1 row-start-3 row-span-1 col-start-4 col-end-4">
+                    <div class="flex flex-col relative mt-40 items-end justify-center">
                         <div class="group relative cursor-pointer">
 
-                            <div class="flex items-center justify-center rounded-2xl group-hover:rounded-b-none bg-slate-700 px-4 min-w-36">
-                                <a class="menu-hover my-2 py-2.5 text-slate-400 lg:mx-4" onClick="">
+                            <div class="flex items-center justify-center rounded-2xl md:group-hover:rounded-b-none bg-slate-700 px-4 min-w-36">
+                                <a class="menu-hover my-2 py-2.5 text-slate-400 md:mx-4" onClick="">
                                     {{ truechosenSubject }}
                                 </a>
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                        stroke="currentColor" class="h-6 w-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                        stroke="rgb(148 163 184)" class="h-6 w-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 9.25l-6.5 6.5-6.5-6.5" />
                                     </svg>
                                 </span>
                             </div>
 
                             <div
-                                class="invisible absolute z-50 flex w-full flex-col bg-slate-800 py-1 px-4 text-gray-800 shadow-xl group-hover:visible rounded-b-2xl">
+                                class="invisible bottom-0 md:bottom-auto absolute z-50 flex w-full flex-col bg-slate-800 py-1 px-4 text-gray-800 shadow-xl group-hover:visible rounded-t-2xl rounded-b-2xl md:rounded-t-none">
 
                                 <a @click="updateSubject" id="physics" class="my-2 block border-b border-slate-800 py-1 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
                                     Physics
@@ -74,14 +74,15 @@ const count = ref(0)
                         </div>
                     </div>
                 </div>
-                <div class="row-start-2 row-span-1 col-start-7 col-span-1">
-                    <button @click="handleCheckboxChange" ref="MStoggler" :class="{ 'flex mt-40 items-center justify-center rounded-2xl group-hover:rounded-b-none bg-slate-700 px-4 min-w-36 text-slate-400 py-5 duration-150': true, 'bg-slate-800 scale-95': includeMS }">
+                <div class="md:row-start-2 row-span-1 md:col-start-7 md:col-span-1 row-start-3 col-start-5">
+                    <button @click="handleCheckboxChange" ref="MStoggler" :class="{ 'mt-40 items-center justify-center rounded-2xl group-hover:rounded-b-none bg-slate-700 px-4 min-w-36 text-slate-400 py-5 duration-150': true, 'bg-slate-800 scale-95': includeMS }">
                         {{ ptypeState }}
                     </button>
                 </div>
-                <div class="row-start-2 col-start-3 col-end-7">
+                <div class="md:row-start-2 md:col-start-3 md:col-end-7 col-start-2 col-span-6 row-start-2">
                     <SearchBar class="col-span-full"></SearchBar>
                 </div>
+
 
 
             </div>
@@ -103,19 +104,25 @@ const count = ref(0)
             <div class='h-8 w-8 bg-slate-500 rounded-full animate-bounce [animation-delay:-0.3s]'></div>
             <div class='h-8 w-8 bg-slate-500 rounded-full animate-bounce [animation-delay:-0.15s]'></div>
             <div class='h-8 w-8 bg-slate-500 rounded-full animate-bounce'></div>
+            <Transition>
+            <div v-if="exceededloadtime" :key="exceededloadtime" class="holdonText px-7 text-slate-500 font-bold py-5"> hold on i swear it's coming just give it a sec bro</div>
+            </Transition>
+
         </div>
-        <div v-show="showResultsContainer" id="gridContainer2" class="relative grid-cols-4 grid flex-col px-20 p-4 min-h-0" ref="gridContainer2">
+        <div v-show="showResultsContainer" id="gridContainer2" class="relative max-w-screen md:max-w-none flex flex-wrap md:px-20 p-4 min-h-0" ref="gridContainer2">
             <div
                 v-for="(article, index) in articles"
                 :key="article.id"
-                class="scrollTarget min-w-96 col-start-1 col-end-5  text-ellipsis overflow-hidden pt-20 whitespace-pre-wrap">
-                    <div>
-                        <h1 class="text-2xl py-2 pb-5 font-extrabold tracking-wider text-emerald-500">{{ 'Q.' + article.qno + ' --- ' + article.papercode }}</h1>
+                class="flex w-full">
+                    <div class="md:min-w-[15%]"></div>  
+                    <div class="scrollTarget text-ellipsis overflow-hidden pt-20 whitespace-pre-wrap max-w-screen md:max-[70%]">
+                        <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider text-emerald-500">{{ 'Q.' + article.qno + ' --- ' + article.papercode }}</h1>
                         <h3 class="text-gray-300" v-html="highlightedText(article.content, article.highlights[0].texts[1].value)"> </h3>
                     </div>  
                     <div>
                         <hr class="my-12 h-px border-t-0 bg-white opacity-25 dark:opacity-100" />
-                    </div>    
+                    </div>
+                    <div class="md:min-w-[15%]"></div>  
             </div>
         </div>
 
@@ -125,10 +132,19 @@ const count = ref(0)
 </template>
 
 
+<style>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
 
 <script>
-
-
 import eventBus from './eventBus.js';
 
 export default {
@@ -137,6 +153,7 @@ export default {
                 articles: [],
                 currentRowIndex: 0,
                 loading: false,
+                exceededloadtime: false,
                 showResultsContainer: false,
                 truechosenSubject: 'ALL',
                 chosenSubjectUrlName: 'ALL',
@@ -146,6 +163,8 @@ export default {
     },
     created() {
         eventBus.on('custom-event', this.handleSearch);
+        eventBus.on('custom-event', this.runTakingTooLongAlerter);
+
     },
     methods: {
         handleSearch(searchText) {
@@ -167,11 +186,11 @@ export default {
             }
             if (this.ptypeState == "including MS") {
                 delete params.type
-                console.log("including markschemes too")
+                // console.log("including markschemes too")
             }
 
 
-            console.log(searchText)
+            // console.log(searchText)
             const searchParams = new URLSearchParams(params);
 
 
@@ -194,6 +213,7 @@ export default {
             })
             .finally(() => {
                 this.loading = false;
+                this.exceededloadtime = false;
                 this.showResultsContainer = true;
                 setTimeout(() => {
                     this.$refs.gridContainer2.scrollIntoView({ behavior: 'smooth', block: 'start'})
@@ -277,6 +297,25 @@ export default {
             );
 
             return highlightedContent;
+        },
+        runTakingTooLongAlerter() {
+            const startTime = Date.now();
+
+            const timerId = setInterval(() => {
+            if (!this.loading) {
+                clearInterval(timerId);
+            } else {
+                const elapsedTime = Date.now() - startTime;
+                // console.log(elapsedTime)
+
+                if (elapsedTime > 9000) {
+                    // console.log("Elapsed time exceeds 9 seconds:", elapsedTime);
+                    this.exceededloadtime = true;
+                    return
+                }
+            }
+            }, 1000); // Check every 1000 milliseconds (1 second)
+
         }
     },
 
