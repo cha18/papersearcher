@@ -120,7 +120,7 @@ const count = ref(0)
             <div class='h-8 w-8 bg-slate-500 rounded-full animate-bounce [animation-delay:-0.15s]'></div>
             <div class='h-8 w-8 bg-slate-500 rounded-full animate-bounce'></div>
             <Transition>
-            <div v-if="exceededloadtime" :key="exceededloadtime" class="holdonText px-7 text-slate-500 font-bold py-5"> hold on i swear it's coming just give it a sec bro</div>
+            <div v-if="exceededloadtime" :key="exceededloadtime" class="holdonText px-7 text-slate-500 font-bold py-5"> hold on i swear it's coming just give it a sec</div>
             </Transition>
 
         </div>
