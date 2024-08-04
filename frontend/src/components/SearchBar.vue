@@ -5,6 +5,8 @@ defineProps({
   msg: String,
 })
 
+
+
 const count = ref(0)
 </script>
 
@@ -71,6 +73,10 @@ export default {
 
 
 <style scoped>
+#navbar {
+  transition: top 10s;
+}
+
 .read-the-docs {
   color: #888;
 }

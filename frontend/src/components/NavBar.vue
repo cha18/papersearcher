@@ -1,19 +1,37 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 defineProps({
   msg: String,
 })
 
+const lastScrollTop = ref(0)
+let navbar
+
+onMounted(() => {
+  navbar = document.getElementById('navbar')
+  window.addEventListener('scroll', handleScroll)
+})
+
+const handleScroll = () => {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop
+  if (scrollTop > lastScrollTop.value) {
+    navbar.style.top = '-80px'
+  } else {
+    navbar.style.top = '0'
+  }
+  lastScrollTop.value = scrollTop
+}
+
 const count = ref(0)
 </script>
 
 <template>
-  <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+  <nav id="navbar" class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a href="" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="https://www.freeiconspng.com/uploads/search-icon-png-29.png" class="h-8" alt="Logo">
-        <span class="self-center text-2xl font-spacemono font-bold whitespace-nowrap dark:text-white">Edexcel Search</span>
+        <img src="../assets/magnifying_glass.png" width="80" height="50" class="h-15" alt="Logo">
+        <span class="self-center text-3xl font-dmserif font-extrabold tracking-wider whitespace-nowrap dark:text-white">Edexcel Search</span>
     </a>
     <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
         <!-- <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-spacemono rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get started</button> -->
@@ -44,7 +62,12 @@ const count = ref(0)
   </nav>
 </template>
 
+
 <style scoped>
+#navbar {
+  transition: top 0.3s;
+}
+
 .read-the-docs {
   color: #888;
 }

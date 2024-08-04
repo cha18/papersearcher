@@ -13,18 +13,18 @@ const count = ref(0)
 </script>
 
 <template>
-    <div class="bg-gray-900 text-white font-spacemono">
-        <div id="navbarComponent" class="bg-blue-500 text-white p-4 fixed z-50">
+    <div class="bg-gray-900 text-white font-dmserif">
+        <div id="navbarComponent" class=" p-4 fixed z-50">
             <NavBar></NavBar>
-        <p id="navbarContent">Navbar Content</p>
+        <!-- <p id="navbarContent">Navbar Content</p> -->
         </div>
         <div id="gridContainer">
             <div class="grid grid-cols-8 grid-rows-5 gap-7 h-screen w-screen">
                 <div class="md:row-start-2 md:col-start-2 md:col-span-1 row-start-3 row-span-1 col-start-4 col-end-4">
-                    <div class="flex flex-col relative mt-40 items-end justify-center">
+                    <div class="flex flex-col mt-40 relative items-end justify-center">
                         <div class="group relative cursor-pointer">
 
-                            <div class="flex items-center justify-center rounded-2xl md:group-hover:rounded-b-none bg-slate-700 px-4 min-w-36">
+                            <div class="flex items-center justify-center rounded-2xl md:group-hover:rounded-b-none bg-slate-700 px-10 min-w-36">
                                 <a class="menu-hover my-2 py-2.5 text-slate-400 md:mx-4" onClick="">
                                     {{ truechosenSubject }}
                                 </a>
@@ -37,36 +37,36 @@ const count = ref(0)
                             </div>
 
                             <div
-                                class="invisible bottom-0 md:bottom-auto absolute z-50 flex w-full flex-col bg-slate-800 py-1 px-4 text-gray-800 shadow-xl group-hover:visible rounded-t-2xl rounded-b-2xl md:rounded-t-none">
+                                class="invisible bottom-0 md:bottom-auto absolute z-50 flex w-full flex-col bg-slate-800 py-2 px-4 text-gray-800 shadow-xl group-hover:visible rounded-t-2xl rounded-b-2xl md:rounded-t-none text-sm">
 
-                                <a @click="updateSubject" id="physics" class="my-2 block border-b border-slate-800 py-1 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
+                                <a @click="updateSubject" id="physics" class="my-2 block border-b border-slate-800 py-0 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
                                     Physics
                                 </a>
 
-                                <a @click="updateSubject" id="economics" class="my-2 block border-b border-slate-800 py-1 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
+                                <a @click="updateSubject" id="economics" class="my-2 block border-b border-slate-800 py-0 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
                                     Economics
                                 </a>
 
-                                <a @click="updateSubject" id="p1" class="my-2 block border-b border-slate-800 py-1 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
+                                <a @click="updateSubject" id="p1" class="my-2 block border-b border-slate-800 py-0 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
                                     Pure Maths 1
                                 </a>
 
-                                <a @click="updateSubject" id="m1" class="my-2 block border-b border-slate-800 py-1 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
+                                <a @click="updateSubject" id="m1" class="my-2 block border-b border-slate-800 py-0 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
                                     Mechanics 1
                                 </a>
 
-                                <a @click="updateSubject" id="s1" class="my-2 block border-b border-slate-800 py-1 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
+                                <a @click="updateSubject" id="s1" class="my-2 block border-b border-slate-800 py-0 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
                                     Statistics 1
                                 </a>
 
-                                <a @click="updateSubject" id="biology" class="my-2 block border-b border-slate-800 py-1 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
+                                <a @click="updateSubject" id="biology" class="my-2 block border-b border-slate-800 py-0 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
                                     Biology
                                 </a>
 
-                                <a @click="updateSubject" id="chemistry" class="my-2 block border-b border-slate-800 py-1 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
+                                <a @click="updateSubject" id="chemistry" class="my-2 block border-b border-slate-800 py-0 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
                                     Chemistry
                                 </a>
-                                <a @click="updateSubject" id="" class="my-2 block border-b border-slate-800 py-1 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
+                                <a @click="updateSubject" id="" class="my-2 block border-b border-slate-800 py-0 font-semibold text-gray-500 hover:text-slate-400 md:mx-2">
                                     ALL
                                 </a>
 
@@ -75,7 +75,7 @@ const count = ref(0)
                     </div>
                 </div>
                 <div class="md:row-start-2 row-span-1 md:col-start-7 md:col-span-1 row-start-3 col-start-5">
-                    <button @click="handleCheckboxChange" ref="MStoggler" :class="{ 'mt-40 items-center justify-center rounded-2xl group-hover:rounded-b-none bg-slate-700 px-4 min-w-36 text-slate-400 py-5 duration-150': true, 'bg-slate-800 scale-95': includeMS }">
+                    <button @click="handleCheckboxChange" ref="MStoggler" :class="{ 'mt-40 items-center justify-center rounded-2xl group-hover:rounded-b-none bg-slate-700 px-4 min-w-36 text-sm text-slate-400 py-5 duration-150': true, 'bg-slate-800 scale-95': includeMS }">
                         {{ ptypeState }}
                     </button>
                 </div>
@@ -131,8 +131,8 @@ const count = ref(0)
                 class="flex w-full">
                     <div class="md:min-w-[15%]"></div>  
                     <div class="scrollTarget text-ellipsis overflow-hidden pt-20 whitespace-pre-wrap max-w-screen md:max-[70%]">
-                        <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider text-emerald-500">{{ 'Q.' + article.month + ' ' + article.year + ' ' + article.subject + ' ' + article.subject_code }}</h1>
-                        <h3 class="text-gray-300" v-html="highlightedText(article.content[0].original, article.highlights[0].texts[1].value)"> </h3>
+                        <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider text-slate-300">{{ article.subject_code + ' ' + article.subject.charAt(0).toUpperCase() + article.subject.slice(1) + ' - ' + article.month + ' ' + article.year }}</h1>
+                        <h3 class="text-slate-800 bg-slate-200 rounded-md py-8 px-8" v-html="highlightedText(article.content[0].original, article.highlights[0].texts[1].value)"> </h3>
                     </div>  
                     <div>
                         <hr class="my-12 h-px border-t-0 bg-white opacity-25 dark:opacity-100" />
@@ -322,7 +322,7 @@ export default {
             // Replace occurrences with the highlighted version
             const highlightedContent = string1.replace(
                 regex,
-                (match) => `<span class="textMatch text-orange-500 decoration-sky-500 underline text-2xl font-extrabold">${match}</span>`
+                (match) => `<span class="textMatch text-orange-700 text-xl font-extrabold">${match}</span>`
             );
 
             return highlightedContent;

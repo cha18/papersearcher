@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily: {
         spacemono: ['Space Mono', 'sans-serif'],
+        dmserif: ['DM Serif Text', 'serif']
       },
     },
   },
