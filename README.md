@@ -30,7 +30,5 @@ Built on Vuejs framework, using Vitejs tooling and tailwindcss.
 
 
 
----
-
 
 
