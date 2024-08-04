@@ -132,7 +132,7 @@ const count = ref(0)
                     <div class="md:min-w-[15%]"></div>  
                     <div class="scrollTarget text-ellipsis overflow-hidden pt-20 whitespace-pre-wrap max-w-screen md:max-[70%]">
                         <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider text-slate-300">{{ article.subject_code + ' ' + article.subject.charAt(0).toUpperCase() + article.subject.slice(1) + ' - ' + article.month + ' ' + article.year }}</h1>
-                        <h3 class="text-slate-800 bg-slate-200 rounded-md py-8 px-8" v-html="highlightedText(article.content[0].original, article.highlights[0].texts[1].value)"> </h3>
+                        <h3 class="text-slate-800 bg-slate-200 rounded-md py-8 px-8" v-html="highlightedText(article.content?.[0]?.original, search)"> </h3>
                     </div>  
                     <div>
                         <hr class="my-12 h-px border-t-0 bg-white opacity-25 dark:opacity-100" />
@@ -199,6 +199,7 @@ export default {
         handleSearch(searchText) {
 
 
+            this.search = searchText
             // Fetch data using the search text
             this.loading = true;
 
@@ -206,7 +207,7 @@ export default {
                 order: -1,
                 field: 'content',
                 query: searchText,
-                subject: this.chosenSubjectUrlName,
+                subject: this.chosenSubjectUrlName, 
                 type: 'false'
             }
 
@@ -312,9 +313,9 @@ export default {
             this.$refs.gridContainer2.scrollIntoView({ behavior: 'smooth', block: 'start'})
 
         },
-        highlightedText(string1, string2) {
+        highlightedText(string1="", string2="") {
             // Escape special characters in string2 to avoid issues with RegExp
-            const escapedString2 = string2.replace("/[.*+?^${}()|[\]\\]/g", "\\$&");
+            const escapedString2 = string2?.replace("/[.*+?^${}()|[\]\\]/g", "\\$&");
 
             // Create a RegExp to match all occurrences of string2 in string1
             const regex = new RegExp(escapedString2, "gi");

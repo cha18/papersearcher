@@ -73,9 +73,7 @@ export default {
 
 
 <style scoped>
-#navbar {
-  transition: top 10s;
-}
+
 
 .read-the-docs {
   color: #888;
