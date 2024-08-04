@@ -76,6 +76,7 @@ def search_table(index_name, table, field_name, query, sort, subject_code, ptype
             }
         },
                 'subject_code': 1,
+                'subject': 1,
                 'type': 1,
                 'highlights': {
                     '$meta': 'searchHighlights'
@@ -107,6 +108,7 @@ def find_paper(index_name, table, subject_code):
             '$project': {
                 'content': 1,
                 'subject_code': 1,
+                'subject': 1,
                 'year': 1,
                 'month': 1,
                 'type': 1,

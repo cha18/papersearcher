@@ -131,8 +131,8 @@ const count = ref(0)
                 class="flex w-full">
                     <div class="md:min-w-[15%]"></div>  
                     <div class="scrollTarget text-ellipsis overflow-hidden pt-20 whitespace-pre-wrap max-w-screen md:max-[70%]">
-                        <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider text-emerald-500">{{ 'Q.' + article.qno + ' --- ' + article.papercode }}</h1>
-                        <h3 class="text-gray-300" v-html="highlightedText(article.content, article.highlights[0].texts[1].value)"> </h3>
+                        <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider text-emerald-500">{{ 'Q.' + article.month + ' ' + article.year + ' ' + article.subject + ' ' + article.subject_code }}</h1>
+                        <h3 class="text-gray-300" v-html="highlightedText(article.content[0].original, article.highlights[0].texts[1].value)"> </h3>
                     </div>  
                     <div>
                         <hr class="my-12 h-px border-t-0 bg-white opacity-25 dark:opacity-100" />
@@ -314,7 +314,7 @@ export default {
         },
         highlightedText(string1, string2) {
             // Escape special characters in string2 to avoid issues with RegExp
-            const escapedString2 = string2.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            const escapedString2 = string2.replace("/[.*+?^${}()|[\]\\]/g", "\\$&");
 
             // Create a RegExp to match all occurrences of string2 in string1
             const regex = new RegExp(escapedString2, "gi");
