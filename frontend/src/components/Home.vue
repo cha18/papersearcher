@@ -207,7 +207,7 @@ export default {
                 field: 'content',
                 query: searchText,
                 subject: this.chosenSubjectUrlName,
-                type: 'QP'
+                type: 'false'
             }
 
             if (this.chosenSubjectUrlName == "" || this.chosenSubjectUrlName == null || this.chosenSubjectUrlName == "ALL") {
@@ -219,7 +219,7 @@ export default {
             }
 
 
-            // console.log(searchText)
+            console.log(searchText)
             const searchParams = new URLSearchParams(params);
 
 

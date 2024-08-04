@@ -15,11 +15,11 @@ def get_database():
 
 ####setting up mongodb
 dbclient = get_database()
-questionstable = dbclient["pastpapers"]["questions"]
+# questionstable = dbclient["pastpapers"]["questions"]
 paperstable = dbclient["pastpapers"]["papers"]
 
 
-def search_table(index_name, table, field_name, query, sort, subject, ptype):
+def search_table(index_name, table, field_name, query, sort, subject_code, ptype):
     pipeline = [
         {
             '$search': {
@@ -38,10 +38,44 @@ def search_table(index_name, table, field_name, query, sort, subject, ptype):
 
         {
             '$project': {
-                'content': 1,
-                'papercode': 1,
-                'qno': 1,
-                'subject': 1,
+                'year': 1,
+                'month': 1,
+                'content': {
+            '$map': {
+                'input': {
+                    '$filter': {
+                        'input': '$content',
+                        'as': 'item',
+                        'cond': {
+                            '$regexMatch': {
+                                'input': '$$item',
+                                'regex': query,
+                                'options': 'i'  # Case-insensitive search
+                            }
+                        }
+                    }
+                },
+                'as': 'match',
+                'in': {
+                    'original': '$$match',
+                    'snippet': {
+                        '$let': {
+                            'vars': {
+                                'index': { '$indexOfCP': ['$$match', query] }
+                            },
+                            'in': {
+                                '$concat': [
+                                    { '$substrCP': ['$$match', { '$max': [0, { '$subtract': ['$$index', 20] }] }, 20] },
+                                    query,
+                                    { '$substrCP': ['$$match', { '$add': ['$$index', { '$strLenCP': query }] }, 20] }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+                'subject_code': 1,
                 'type': 1,
                 'highlights': {
                     '$meta': 'searchHighlights'
@@ -53,8 +87,8 @@ def search_table(index_name, table, field_name, query, sort, subject, ptype):
         }
     ]
 
-    if subject is not None:
-        pipeline.insert(1, {'$match': {'subject': subject}})
+    if subject_code is not None:
+        pipeline.insert(1, {'$match': {'subject_code': subject_code}})
     if ptype is not None:
         pipeline.insert(1, {'$match': {'type': ptype}})
     result = table.aggregate(pipeline)
@@ -67,14 +101,14 @@ def search_table(index_name, table, field_name, query, sort, subject, ptype):
     return list(result_list)
 
 
-def find_paper(index_name, table, papercode, ptype):
+def find_paper(index_name, table, subject_code):
     pipeline = [
         {
             '$project': {
                 'content': 1,
-                'papercode': 1,
-                'qno': 1,
-                'subject': 1,
+                'subject_code': 1,
+                'year': 1,
+                'month': 1,
                 'type': 1,
                 'highlights': {
                     '$meta': 'searchHighlights'
@@ -82,12 +116,12 @@ def find_paper(index_name, table, papercode, ptype):
             }
         },
         {
-            '$sort': {'qno': 1}  # Sort by score in descending order
+            '$sort': {'year': 1}  # Sort by score in descending order
         }
     ]    
 
-    if papercode is not None:
-        pipeline.insert(1, {'$match': {'papercode': papercode}})
+    if subject_code is not None:
+        pipeline.insert(1, {'$match': {'subject_code': subject_code}})
 
     result = table.aggregate(pipeline)
     result_list = []
