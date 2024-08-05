@@ -131,7 +131,7 @@ const count = ref(0)
                 class="flex w-full">
                     <div class="md:min-w-[15%]"></div>  
                     <div class="scrollTarget text-ellipsis overflow-hidden pt-20 whitespace-pre-wrap max-w-screen md:max-[70%]">
-                        <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider text-slate-300">{{ article.subject_code + ' ' + article.subject.charAt(0).toUpperCase() + article.subject.slice(1) + ' - ' + article.month + ' ' + article.year }}</h1>
+                        <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider text-slate-300">{{ article.subject_code + ' ' + article.subject.charAt(0).toUpperCase() + article.subject.slice(1) + ' - ' + article.month + ' ' + article.year + ' - ' + article.paper_code}}</h1>
                         <h3 class="text-slate-800 bg-slate-200 rounded-md py-8 px-8" v-html="highlightedText(article.content?.[0]?.original, search)"> </h3>
                     </div>  
                     <div>

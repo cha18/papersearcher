@@ -80,8 +80,10 @@ def search_table(index_name, table, field_name, query, sort, subject_code, ptype
                     }
                 },
                 'subject_code': 1,
+                'paper_code': 1,
                 'subject': 1,
                 'type': 1,
+                'name': 1,
                 'highlights': {
                     '$meta': 'searchHighlights'
                 }
