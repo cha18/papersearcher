@@ -9,7 +9,6 @@ defineProps({
 
 const count = ref(0)
 
-
 </script>
 
 <template>
@@ -120,18 +119,32 @@ const count = ref(0)
             <div class='h-8 w-8 bg-slate-500 rounded-full animate-bounce [animation-delay:-0.15s]'></div>
             <div class='h-8 w-8 bg-slate-500 rounded-full animate-bounce'></div>
             <Transition>
-            <div v-if="exceededloadtime" :key="exceededloadtime" class="holdonText px-7 text-slate-500 font-bold py-5"> hold on i swear it's coming just give it a sec</div>
+            <div v-if="exceededloadtime" :key="exceededloadtime" class="holdonText px-7 text-slate-500 font-bold py-5"> 
+                <div>
+                    hold on i swear it's coming just give it a sec...
+                </div>
+            </div>
             </Transition>
 
         </div>
-        <div v-show="showResultsContainer" id="gridContainer2" class="relative max-w-screen md:max-w-none flex flex-wrap md:px-20 p-4 min-h-0" ref="gridContainer2">
+        <div v-show="showResultsContainer" id="gridContainer2" class="relative max-w-screen md:max-w-none md:px-20 min-h-0" ref="gridContainer2">
+            <div v-if="article_length === 0"  class=" scroll-target md:text-2xl text-[1.25rem] font-extrabold tracking-wider text-slate-300">
+                <h1 class="text-center pb-24 pt-24">No results...</h1>
+            </div>
             <div
                 v-for="(article, index) in articles"
-                :key="article.id"
+                :key="article.id" 
                 class="flex w-full">
                     <div class="md:min-w-[15%]"></div>  
                     <div class="scrollTarget text-ellipsis overflow-hidden pt-20 whitespace-pre-wrap max-w-screen md:max-[70%]">
-                        <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider text-slate-300">{{ article.subject_code + ' ' + article.subject.charAt(0).toUpperCase() + article.subject.slice(1) + ' - ' + article.month + ' ' + article.year + ' - ' + article.paper_code}}</h1>
+                        <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider text-slate-300">
+                            <a>
+                                {{ article.subject_code + ' ' + article.subject.charAt(0).toUpperCase() + article.subject.slice(1) + ' - ' + article.month + ' ' + article.year + ' - '}}
+                            </a>
+                            <a class="hover:text-slate-500 text-slate-400 duration-200" v-bind:href=" 'https://www.google.com/search?q=' + article.paper_code + '+' + article.subject + '+' + article.year" target="_blank">
+                                {{ article.paper_code }}
+                            </a>
+                        </h1>      
                         <h3 class="text-slate-800 bg-slate-200 rounded-md py-8 px-8" v-html="highlightedText(article.content?.[0]?.original, search)"> </h3>
                     </div>  
                     <div>
@@ -171,6 +184,7 @@ const count = ref(0)
 
 <script>
 import eventBus from './eventBus.js';
+import navbar from './NavBar.vue';
 
 export default {
     data() {
@@ -194,8 +208,12 @@ export default {
     },
     mounted() {
         this.hide = true;
+        
+
     },
     methods: {
+
+        
         handleSearch(searchText) {
 
 
@@ -245,9 +263,10 @@ export default {
                 this.loading = false;
                 this.exceededloadtime = false;
                 this.showResultsContainer = true;
+                this.article_length = this.articles.length
                 setTimeout(() => {
                     this.$refs.gridContainer2.scrollIntoView({ behavior: 'smooth', block: 'start'})
-                }, 3000)
+                }, 500)
 
             });
         },
@@ -278,7 +297,7 @@ export default {
             const distance = rect.top - window.innerHeight;
 
             // Check if the target is below the current viewport
-            if (distance > 0 && distance < closestDistance) {
+            if (rect.top > 0 && distance < closestDistance) {
                 closestDistance = distance;
                 closestTarget = target;
             }
@@ -310,7 +329,21 @@ export default {
             }
         },
         scrollToTop() {
+
+
+
+            let navbar
+            navbar = document.getElementById('navbar')
             this.$refs.gridContainer2.scrollIntoView({ behavior: 'smooth', block: 'start'})
+
+            var scrollTimeout
+            addEventListener('scroll', function(e) {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    navbar.style.top = '-80px'
+                }, 100);
+            });
+
 
         },
         highlightedText(string1="", string2="") {
