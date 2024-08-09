@@ -98,13 +98,13 @@ const count = ref(0)
         </button>
         </div>
         <Transition name="fade">
-            <div v-if="!hide" class="font-medium text-s bottom-0 left-0 px-7 py-4 fixed rounded-2xl bg-slate-600 z-50 border-2 border-l-0 border-slate-600">
+            <div v-if="!hide" class="font-medium text-s bottom-0 left-0 px-7 py-2 fixed rounded-2xl bg-slate-600 z-50 border-2 border-l-0 border-slate-600">
                 <p class="py-2">
                     Jump to Next Question
                     <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Ctrl</kbd> + <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Arrow Key Down</kbd>
                 </p>
                 <p class="py-2">
-                    Jump to Next Match --
+                    Jump to Next Match
                     <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Alt</kbd> + <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Arrow Key Down</kbd>
                 </p>
                  

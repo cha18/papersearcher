@@ -39,44 +39,16 @@ def search_table(index_name, table, field_name, query, sort, subject_code, ptype
                 'year': 1,
                 'month': 1,
                 'content': {
-                    '$cond': {
-                        'if': { '$gt': [{ '$size': '$content' }, 0] },  # Check if content array size > 0
-                        'then': {
-                            '$map': {
-                                'input': {
-                                    '$filter': {
-                                        'input': '$content',
-                                        'as': 'item',
-                                        'cond': {
-                                            '$regexMatch': {
-                                                'input': '$$item',
-                                                'regex': query,
-                                                'options': 'i'
-                                            }
-                                        }
-                                    }
-                                },
-                                'as': 'match',
-                                'in': {
-                                    'original': '$$match',
-                                    'snippet': {
-                                        '$let': {
-                                            'vars': {
-                                                'index': { '$indexOfCP': ['$$match', query] }
-                                            },
-                                            'in': {
-                                                '$concat': [
-                                                    { '$substrCP': ['$$match', { '$max': [0, { '$subtract': ['$$index', 20] }] }, 20] },
-                                                    query,
-                                                    { '$substrCP': ['$$match', { '$add': ['$$index', { '$strLenCP': query }] }, 20] }
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
+                    '$filter': {
+                        'input': '$content',
+                        'as': 'tuple',
+                        'cond': {
+                            '$regexMatch': {
+                                'input': { '$arrayElemAt': ['$$tuple', 1] },  # Access the 2nd element of the tuple
+                                'regex': query,
+                                'options': 'i'
                             }
-                        },
-                        'else': []  # Provide an empty array if content is empty
+                        }
                     }
                 },
                 'subject_code': 1,
@@ -98,6 +70,8 @@ def search_table(index_name, table, field_name, query, sort, subject_code, ptype
             '$sort': {'highlights.score': int(sort)}
         }
     ]
+
+
 
     if subject_code is not None:
         pipeline.insert(1, {'$match': {'subject_code': subject_code}})
