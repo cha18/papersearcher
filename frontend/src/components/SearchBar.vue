@@ -15,7 +15,7 @@ const count = ref(0)
     class="mx-auto mt-40 relative bg-slate-700 min-w-sm flex flex-col md:flex-row items-center justify-center border-black py-2 px-2 rounded-2xl gap-2 duration-700  hover:shadow-2xl hover:shadow-slate-800 focus-within:border-black"
     for="search-bar">
     <input v-on:keyup.enter="search" id="search-bar" v-model="searchText" :placeholder="showSearchIsEmpty ? 'This cannot be left empty.' : 'Search papers...'"
-    :class="{ 'px-6 py-2 w-full rounded-md flex-1 outline-none bg-slate-700 custom-autofill text-white': true, 'placeholder-red-600': showSearchIsEmpty }">
+    :class="{ 'px-6 py-2 w-full rounded-md flex-1 outline-none bg-slate-700 custom-autofill text-white': true, 'placeholder-red-600': showSearchIsEmpty}">
     <button
         class="w-full md:w-auto px-6 py-3 bg-black border-black text-white fill-gray-500 active:scale-95 duration-100 border will-change-transform overflow-hidden relative rounded-xl transition-all disabled:opacity-70" @click="search">
         

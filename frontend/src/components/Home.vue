@@ -151,15 +151,15 @@ const count = ref(0)
                                 {{ article.subject.charAt(0).toUpperCase() + article.subject.slice(1) + ' - ' }}
                             </a>
                             <a v-if="article.month">
-                                {{ article.month }}
+                                {{ article.month + ' '}}
                             </a>
                             <a>
-                                {{ ' ' + article.year}}
+                                {{ article.year}}
                             </a>
                             <a v-if="article.paper_code" class="hover:text-slate-500 text-slate-400 duration-200" v-bind:href=" 'https://www.google.com/search?q=' + article.paper_code + '+' + article.subject + '+' + article.year" target="_blank">
                                 {{' - ' + article.paper_code }}
                             </a>
-                            <a v-if="article.type" class="italic font-semibold text-pink-600 text-xl">
+                            <a v-if="article.type" class="italic font-semibold text-pink-600 text-xl hover:text-pink-700 duration-200" v-bind:href=" 'https://www.google.com/search?q=' + '+' + article.subject + '+' + article.year + '+' + article.month + '+mark scheme'" target="_blank">
                                 (markscheme)
                             </a>
                         </h1>      
@@ -214,7 +214,7 @@ export default {
                 showResultsContainer: false,
                 truechosenSubject: 'ALL',
                 chosenSubjectUrlName: 'ALL',
-                includeMS: false,
+                includeMS: true,
                 hide: false
             }
     },
@@ -243,14 +243,14 @@ export default {
                 field: 'content',
                 query: searchText,
                 subject: this.chosenSubjectUrlName, 
-                type: 'false'
+                type: 'true'
             }
 
             if (this.chosenSubjectUrlName == "" || this.chosenSubjectUrlName == null || this.chosenSubjectUrlName == "ALL") {
                 delete params.subject
             }
-            if (this.ptypeState == "including MS") {
-                params.type = 'true'
+            if (!this.includeMS) {
+                params.type = 'false'
                 // console.log("including markschemes too")
             }
 
@@ -354,12 +354,16 @@ export default {
             this.$refs.gridContainer2.scrollIntoView({ behavior: 'smooth', block: 'start'})
 
             var scrollTimeout
-            addEventListener('scroll', function(e) {
+            const scrollTopHandling = () => {
                 clearTimeout(scrollTimeout);
                 scrollTimeout = setTimeout(function() {
                     navbar.style.top = '-80px'
+                    window.removeEventListener('scroll', scrollTopHandling)
                 }, 100);
-            });
+            };
+
+            window.addEventListener('scroll', scrollTopHandling)
+
 
 
         },
