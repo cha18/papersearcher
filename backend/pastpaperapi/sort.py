@@ -12,8 +12,8 @@ def q_results():
     subject = request.args.get('subject') #subject can be a subject OR will return all subjects if not mentioned
     ptype = request.args.get('type') 
 
-    if ptype in ['true', '1', 'True']:
-        ptype = True
+    if ptype in ['false', '0', 'false']:
+        ptype = False
     else:
         ptype = None
 

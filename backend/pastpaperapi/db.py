@@ -75,7 +75,7 @@ def search_table(index_name, table, field_name, query, sort, subject_code, ptype
 
     if subject_code is not None:
         pipeline.insert(1, {'$match': {'subject_code': subject_code}})
-    if ptype is not None:
+    if ptype is False:
         pipeline.insert(1, {'$match': {'type': ptype}})
     result = table.aggregate(pipeline)
 

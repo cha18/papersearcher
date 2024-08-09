@@ -75,7 +75,12 @@ const count = ref(0)
                 </div>
                 <div class="md:row-start-2 row-span-1 md:col-start-7 md:col-span-1 row-start-3 col-start-5">
                     <button @click="handleCheckboxChange" ref="MStoggler" :class="{ 'mt-40 items-center justify-center rounded-2xl group-hover:rounded-b-none bg-slate-700 px-4 min-w-36 text-sm text-slate-400 py-5 duration-150': true, 'bg-slate-800 scale-95': includeMS }">
-                        {{ ptypeState }}
+                        <a v-if="includeMS">
+                            including MS
+                        </a>
+                        <a v-if="!includeMS">
+                            excluding MS
+                        </a>
                     </button>
                 </div>
                 <div class="md:row-start-2 md:col-start-3 md:col-end-7 col-start-2 col-span-6 row-start-2">
@@ -136,16 +141,29 @@ const count = ref(0)
                 :key="article.id" 
                 class="flex w-full">
                     <div class="md:min-w-[15%]"></div>  
-                    <div class="scrollTarget text-ellipsis overflow-hidden pt-20 whitespace-pre-wrap max-w-screen md:max-[70%]">
-                        <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider text-slate-300">
-                            <a>
-                                {{ article.subject_code + ' ' + article.subject.charAt(0).toUpperCase() + article.subject.slice(1) + ' - ' + article.month + ' ' + article.year + ' - '}}
+                    <div class="scrollTarget text-ellipsis overflow-hidden pt-20 whitespace-pre-wrap max-w-screen md:max-[70%] text-slate-300">
+                        <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider ">
+                            <a class="text-slate-100 text-2xl pr-2">{{ 'Q' + article.content[0][0] + '. ' }} </a>
+                            <a v-if="article.subject_code">
+                                {{ article.subject_code + ' ' }}
                             </a>
-                            <a class="hover:text-slate-500 text-slate-400 duration-200" v-bind:href=" 'https://www.google.com/search?q=' + article.paper_code + '+' + article.subject + '+' + article.year" target="_blank">
-                                {{ article.paper_code }}
+                            <a>
+                                {{ article.subject.charAt(0).toUpperCase() + article.subject.slice(1) + ' - ' }}
+                            </a>
+                            <a v-if="article.month">
+                                {{ article.month }}
+                            </a>
+                            <a>
+                                {{ ' ' + article.year}}
+                            </a>
+                            <a v-if="article.paper_code" class="hover:text-slate-500 text-slate-400 duration-200" v-bind:href=" 'https://www.google.com/search?q=' + article.paper_code + '+' + article.subject + '+' + article.year" target="_blank">
+                                {{' - ' + article.paper_code }}
+                            </a>
+                            <a v-if="article.type" class="italic font-semibold text-pink-600 text-xl">
+                                (markscheme)
                             </a>
                         </h1>      
-                        <h3 class="text-slate-800 bg-slate-200 rounded-md py-8 px-8" v-html="highlightedText(article.content?.[0]?.original, search)"> </h3>
+                        <h3 class="text-slate-800 bg-slate-200 rounded-md py-8 px-8" v-html="highlightedText(article.content[0][1], search)"> </h3>
                     </div>  
                     <div>
                         <hr class="my-12 h-px border-t-0 bg-white opacity-25 dark:opacity-100" />
@@ -196,7 +214,6 @@ export default {
                 showResultsContainer: false,
                 truechosenSubject: 'ALL',
                 chosenSubjectUrlName: 'ALL',
-                ptypeState: "excluding MS",
                 includeMS: false,
                 hide: false
             }
@@ -233,7 +250,7 @@ export default {
                 delete params.subject
             }
             if (this.ptypeState == "including MS") {
-                delete params.type
+                params.type = 'true'
                 // console.log("including markschemes too")
             }
 
