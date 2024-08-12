@@ -140,8 +140,12 @@ const count = ref(0)
                 v-for="(article, index) in articles"
                 :key="article.id" 
                 class="flex w-full">
+                
                     <div class="md:min-w-[15%]"></div>  
                     <div class="scrollTarget text-ellipsis overflow-hidden pt-20 whitespace-pre-wrap max-w-screen md:max-[70%] text-slate-300">
+
+
+                        
                         <h1 class="md:text-2xl text-[1.25rem] py-2 pb-5 font-extrabold tracking-wider ">
                             <a class="text-slate-100 text-2xl pr-2">{{ 'Q' + article.content[0][0] + '. ' }} </a>
                             <a v-if="article.subject_code">
@@ -162,8 +166,21 @@ const count = ref(0)
                             <a v-if="article.type" class="italic font-semibold text-pink-600 text-xl hover:text-pink-700 duration-200" v-bind:href=" 'https://www.google.com/search?q=' + '+' + article.subject + '+' + article.year + '+' + article.month + '+mark scheme'" target="_blank">
                                 (markscheme)
                             </a>
-                        </h1>      
-                        <h3 class="text-slate-800 bg-slate-200 rounded-md py-8 px-8" v-html="highlightedText(article.content[0][1], search)"> </h3>
+                        </h1>     
+
+                        <div class="text-slate-800 bg-slate-200 rounded-md">
+                            <div class="group">
+                                <img src="https://img.icons8.com/?size=100&id=77&format=png&color=000000" class="right-0 h-4 float-end m-1">
+                                <div class="invisible opacity-0 group-hover:opacity-100 group-hover:visible float-end mr-[-1.2rem] bg-gray-700 italic duration-200 rounded-2xl px-2 h-4 m-1 z-0">
+                                    <h3 class="text-slate-300 text-[0.7rem] text-right ">
+                                        if insufficient paper information is seen, try copying the text onto google.
+                                    </h3>
+
+                                </div>
+                            </div>
+                            <h3 class="py-8 px-8" v-html="highlightedText(article.content[0][1], search)"> </h3>
+                        </div> 
+                        
                     </div>  
                     <div>
                         <hr class="my-12 h-px border-t-0 bg-white opacity-25 dark:opacity-100" />
