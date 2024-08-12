@@ -3,6 +3,11 @@ from .db import *
 
 sort = Blueprint('sort', __name__)
 
+
+@sort.route('/')
+def home():
+    return "<h1> Pastpaper API </h1> <h3> /search - find papers that match query </h3> <h3> /paper - find paper that matches paper code </h3>"
+
 @sort.route('/search')
 def q_results():
     #example: 127.0.0.1:5000/search?order=-1&field=content&query=growth&subject=economics
