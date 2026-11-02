@@ -1,14 +1,14 @@
 # Edexcel Paper Search
 Website that allows users to search through indexed edexcel past papers, and returns details of papers that meet query conditions
 
-https://edexcelpapersearch.onrender.com/
+https://edexcelpapersearch.onrender.com/ (free-tier hosting, partially offline)
 
 
 
 
-** Many past papers are not yet indexed 
+*Many past papers are not yet indexed*
 
-I'll probably redo this sometime in the future because its barely held together with very ugly coding practices
+I'll probably redo this sometime in the future with cleaner parsing
 
 
 ---
